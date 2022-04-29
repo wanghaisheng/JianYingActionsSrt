@@ -1,9 +1,19 @@
 import os
 import requests
 import subprocess
+import yt_dlp
 
 def aria2(url,name,args:str=""):
     return subprocess.Popen(f'aria2c -x 16 -s 16 -k 1M -o "./components/tmp/{name}" "{url}" {args}',shell=False,stdout=subprocess.DEVNULL,stderr=subprocess.DEVNULL).wait()
+def yt_dlp(url):
+    ydl_opts = {"retries":10,
+    # "write-thumbnail":True,
+            'outtmpl': './components/tmp' + '/' + '%(title)s.%(ext)s',
+            'format': 'bestvideo+bestaudio/best'}
+    with yt_dlp.YoutubeDL(ydl_opts) as ydl:
+        # info = ydl.extract_info(item['arcurl'])
+        ydl.download(url)
+
 
 def bilibili(bv:str,ASDB:bool=False,download_sourcer:int=0):
     # Sourcer 

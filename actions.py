@@ -8,6 +8,7 @@ import uiautomation as auto
 import components.ui as ui
 import components.video_Down as vd
 
+
 Start_Time = time.time()
 Config = json.loads(open("./Config.json","r",encoding="utf-8").read())
 
@@ -122,8 +123,10 @@ if __name__ == "__main__":
     
         for item in Config["url"]:
             r.Release_Introduce += item+";"
-            if "bv" in item.lower() or "bilibili.com" in item.lower(): vd.bilibili(item,ASDB=Config["ASDB"],download_sourcer=0)
-            else: vd.aria2(item,item.split("/")[-1])
+            vd.yt_dlp(item)
+            # if "bv" in item.lower() or "bilibili.com" in item.lower(): vd.bilibili(item,ASDB=Config["ASDB"],download_sourcer=0)
+            # else: vd.aria2(item,item.split("/")[-1])
+            
         try:
             ui.Multi_Video_Process(video_path=Config['Sources_Path'])
         except Exception as e:
@@ -137,6 +140,8 @@ if __name__ == "__main__":
         ui.CONFIG["draft_content_directory"] = Config["Draft_Content_Json"]
         ui.CONFIG["JianYing_Exe_Path"] = Config["JianYing_App_Path"]
         for item in Config["url"]:
-            if "bv" in item.lower() or "bilibili.com" in item.lower(): vd.bilibili(item,ASDB=Config["ASDB"],download_sourcer=0)
-            else: vd.aria2(item,item.split("/")[-1])
+            # if "bv" in item.lower() or "bilibili.com" in item.lower(): vd.bilibili(item,ASDB=Config["ASDB"],download_sourcer=0)
+            # else: vd.aria2(item,item.split("/")[-1])
+            vd.yt_dlp(item)
+
         ui.Multi_Video_Process(video_path=Config['Sources_Path'])
